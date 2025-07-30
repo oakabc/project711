@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=sarabun:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The application is structured as a single-page interactive guide. The core is a horizontal, clickable 5-step stepper representing the Design Thinking process. This allows users to navigate non-linearly. Clicking a step dynamically updates a central content area below, showing detailed information for that step. This focused-view approach prevents information overload. The structure begins with the project's objective, followed by a visual chart for the scoring criteria, the main interactive process guide, and concludes with the final deliverable requirements, submission methods, group registration, presentation schedule, and recommendations. This flow was chosen to transform the static document into an engaging, step-by-step learning journey that is intuitive and mirrors the project's own logical progression. -->
-    <!-- Visualization & Content Choices: 1. Scoring Criteria: Presented as a Chart.js Donut chart to visually and quickly communicate the 50/40/10 weighting between Process, Concept, and Presentation, which is more engaging than text. Interaction includes tooltips on hover. 2. Design Thinking Process: A custom-built interactive stepper using styled HTML divs and Tailwind CSS. Unicode characters are used for icons. This serves as the main navigation, allowing users to select a stage. This is more interactive and visually appealing than a simple list. 3. Step Details & Deliverables: Content is organized into styled cards using HTML and Tailwind. This content is dynamically updated via JavaScript based on user interaction with the stepper, ensuring the interface remains clean and focused. This method was chosen for its clarity and ability to handle structured text effectively. -->
+    <!-- Application Structure Plan: The application is structured as a single-page interactive guide. The core is a horizontal, clickable 5-step stepper representing the Design Thinking process. This allows users to navigate non-linearly. Clicking a step dynamically updates a central content area below, showing detailed information for that step. This focused-view approach prevents information overload. The structure begins with the project's objective, followed by a visual chart for the scoring criteria, a detailed scoring breakdown, the main interactive process guide, and concludes with the final deliverable requirements, submission methods, group registration, presentation schedule, and recommendations. This flow was chosen to transform the static document into an engaging, step-by-step learning journey that is intuitive and mirrors the project's own logical progression. -->
+    <!-- Visualization & Content Choices: 1. Scoring Criteria: Presented as a Chart.js Donut chart to visually and quickly communicate the 40/30/10/20 weighting, which is more engaging than text. Interaction includes tooltips on hover. 2. Design Thinking Process: A custom-built interactive stepper using styled HTML divs and Tailwind CSS. Unicode characters are used for icons. This serves as the main navigation, allowing users to select a stage. This is more interactive and visually appealing than a simple list. 3. Step Details & Deliverables: Content is organized into styled cards using HTML and Tailwind. This content is dynamically updated via JavaScript based on user interaction with the stepper, ensuring the interface remains clean and focused. This method was chosen for its clarity and ability to handle structured text effectively. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -64,7 +64,19 @@
                     <div class="chart-container">
                         <canvas id="scoringChart"></canvas>
                     </div>
-                    <p class="text-center mt-4 text-gray-600">โครงงานจะถูกประเมินจาก 3 ส่วนหลัก ได้แก่ กระบวนการ Design Thinking (50%), ผลงานนวัตกรรม (Concept) (40%) และการนำเสนอ (10%)</p>
+                    <p class="text-center mt-4 text-gray-600">โครงงานจะถูกประเมินจาก 4 ส่วนหลัก ได้แก่ กระบวนการ Design Thinking (40%), ผลงานนวัตกรรม (Concept) (30%), การประเมินตนเองและเพื่อนร่วมทีม (10%) และการนำเสนอแบบ Pitching (20%)</p>
+                </div>
+            </section>
+
+            <section id="scoring-details" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">💡 แนวทางการคิดคะแนน</h2>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <ul class="list-disc list-inside space-y-3 text-gray-700">
+                        <li><span class="font-bold text-[#007542]">กระบวนการ Design Thinking (40%):</span> ประเมินจากการแสดงให้เห็นถึงความเข้าใจและการประยุกต์ใช้แต่ละขั้นตอนของ Design Thinking อย่างเป็นระบบและครบถ้วน ตั้งแต่การทำความเข้าใจปัญหา การกำหนดปัญหา การระดมความคิด การสร้างต้นแบบ และการทดสอบแนวคิด</li>
+                        <li><span class="font-bold text-[#fcc230]">ผลงานนวัตกรรม (Concept) (30%):</span> ประเมินจากคุณภาพของแนวคิดนวัตกรรมที่พัฒนาขึ้น รวมถึงความน่าสนใจ ความแปลกใหม่ ความเป็นไปได้ในการนำไปใช้งานจริง และศักยภาพในการแก้ไขปัญหาหรือสร้างประโยชน์ให้กับ 7-Eleven</li>
+                        <li><span class="font-bold text-[#6495ed]">การประเมินตนเองและเพื่อนร่วมทีม (10%):</span> ประเมินจากการมีส่วนร่วมในกลุ่ม การทำงานร่วมกัน ความรับผิดชอบ และการสะท้อนความคิดเห็นต่อการทำงานของตนเองและเพื่อนร่วมทีม</li>
+                        <li><span class="font-bold text-[#ff6384]">การนำเสนอแบบ Pitching (20%):</span> ประเมินจากความชัดเจนในการนำเสนอ ความน่าสนใจ ความสามารถในการสื่อสารประเด็นสำคัญ และการตอบคำถาม <span class="font-bold text-red-600">ข้อกำหนด: สมาชิกทุกคนในกลุ่มต้องนำเสนอ</span></li>
+                    </ul>
                 </div>
             </section>
 
@@ -230,7 +242,7 @@
             {
                 name: "Test",
                 thaiName: "ทดสอบ",
-                icon: "🧪",
+                icon: "�",
                 title: "ขั้นตอนที่ 5: Test (ทดสอบและปรับปรุงแนวคิด)",
                 description: "ขั้นตอนนี้คือการนำต้นแบบแนวคิดไปนำเสนอและรับฟังความคิดเห็นจากผู้ที่เกี่ยวข้อง เพื่อนำมาปรับปรุงและพัฒนาให้ดีขึ้น",
                 points: [
@@ -298,16 +310,18 @@
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['กระบวนการ Design Thinking', 'ผลงานนวัตกรรม (Concept)', 'การนำเสนอ'],
+                    labels: ['กระบวนการ Design Thinking', 'ผลงานนวัตกรรม (Concept)', 'การประเมินตนเองและเพื่อนร่วมทีม', 'การนำเสนอแบบ Pitching'],
                     datasets: [{
                         label: 'สัดส่วนคะแนน',
-                        data: [50, 40, 10], /* Updated data: 50% Process, 40% Concept, 10% Presentation */
+                        data: [40, 30, 10, 20], /* Updated data: 40% Process, 30% Concept, 10% Self/Peer, 20% Pitching */
                         backgroundColor: [
-                            'rgba(0, 117, 66, 0.8)',
-                            'rgba(252, 194, 48, 0.9)',
-                            'rgba(100, 149, 237, 0.8)' /* New color for Presentation */
+                            'rgba(0, 117, 66, 0.8)', /* Design Thinking */
+                            'rgba(252, 194, 48, 0.9)', /* Concept */
+                            'rgba(100, 149, 237, 0.8)', /* Self/Peer Evaluation */
+                            'rgba(255, 99, 132, 0.8)' /* Pitching Presentation */
                         ],
                         borderColor: [
+                            '#ffffff',
                             '#ffffff',
                             '#ffffff',
                             '#ffffff'
@@ -350,3 +364,4 @@
     </script>
 </body>
 </html>
+�
