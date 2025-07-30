@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แนวทางโครงงานนวัตกรรมด้วย Design Thinking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page interactive guide. The core is a horizontal, clickable 5-step stepper representing the Design Thinking process. This allows users to navigate non-linearly. Clicking a step dynamically updates a central content area below, showing detailed information for that step. This focused-view approach prevents information overload. The structure begins with the project's objective, followed by a visual chart for the scoring criteria, the main interactive process guide, and concludes with the final deliverable requirements and recommendations. This flow was chosen to transform the static document into an engaging, step-by-step learning journey that is intuitive and mirrors the project's own logical progression. -->
+    <!-- Visualization & Content Choices: 1. Scoring Criteria: Presented as a Chart.js Donut chart to visually and quickly communicate the 50/50 weighting between Process and Concept, which is more engaging than text. Interaction includes tooltips on hover. 2. Design Thinking Process: A custom-built interactive stepper using styled HTML divs and Tailwind CSS. Unicode characters are used for icons. This serves as the main navigation, allowing users to select a stage. This is more interactive and visually appealing than a simple list. 3. Step Details & Deliverables: Content is organized into styled cards using HTML and Tailwind. This content is dynamically updated via JavaScript based on user interaction with the stepper, ensuring the interface remains clean and focused. This method was chosen for its clarity and ability to handle structured text effectively. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #FDFBF7;
+            color: #4A4A4A;
+        }
+        .step-card {
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .step-card.active {
+            background-color: #007542;
+            color: white;
+            border-color: #007542;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-[#007542]">โครงงานนวัตกรรม 7-Eleven</h1>
+            <p class="text-lg sm:text-xl mt-2 text-gray-600">แนวทางพัฒนานวัตกรรมด้วยกระบวนการ Design Thinking</p>
+        </header>
+
+        <main>
+            <section id="objective" class="mb-12 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                <h2 class="text-2xl font-bold mb-3 text-gray-800">🎯 วัตถุประสงค์</h2>
+                <p class="text-gray-700">
+                    เอกสารนี้เป็นแนวทางสำหรับนักศึกษาฝึกงานในการพัฒนาโครงงานนวัตกรรมโดยใช้กระบวนการ <span class="font-bold text-[#005a34]">Design Thinking</span> เพื่อแก้ไขปัญหาหรือสร้างสรรค์โอกาสใหม่ๆ ให้กับร้าน 7-Eleven จากประสบการณ์ที่ได้รับ โดยเน้นการทำความเข้าใจผู้ใช้งาน การสร้างสรรค์แนวคิด และนำเสนอผลงานในรูปแบบของแนวคิด (Concept) ที่จับต้องได้
+                </p>
+            </section>
+
+            <section id="scoring" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">📊 เกณฑ์การให้คะแนน</h2>
+                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="chart-container">
+                        <canvas id="scoringChart"></canvas>
+                    </div>
+                    <p class="text-center mt-4 text-gray-600">โครงงานจะถูกประเมินจาก 2 ส่วนหลักในสัดส่วนที่เท่ากัน เพื่อให้ความสำคัญทั้งกระบวนการและการผลลัพธ์ของแนวคิด</p>
+                </div>
+            </section>
+
+            <section id="process" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">🚀 5 ขั้นตอนสู่การสร้างนวัตกรรม</h2>
+                <div id="steps-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                </div>
+
+                <div id="step-content" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 min-h-[300px]">
+                </div>
+            </section>
+
+            <section id="deliverable" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">🏆 ผลงานนวัตกรรม (Concept) ที่ต้องนำเสนอ</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">1. ชื่อโครงงานและปัญหาที่แก้ไข</h3>
+                        <p class="text-gray-700">ตั้งชื่อที่น่าสนใจและสื่อถึงนวัตกรรม พร้อมระบุ Problem Statement ที่ชัดเจนจากขั้นตอน Define</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">2. รายละเอียดแนวคิดนวัตกรรม</h3>
+                        <p class="text-gray-700">อธิบายว่าคืออะไร ทำงานอย่างไร มีคุณสมบัติเด่นอะไร กลุ่มเป้าหมายคือใคร และแตกต่างจากเดิมอย่างไร</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">3. ประโยชน์และผลกระทบ</h3>
+                        <p class="text-gray-700">ระบุประโยชน์ที่จะเกิดกับลูกค้า พนักงาน หรือ 7-Eleven (เช่น เพิ่มความสะดวก ลดต้นทุน) และผลกระทบเชิงบวกอื่นๆ</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">4. ความเป็นไปได้</h3>
+                        <p class="text-gray-700">ประเมินความเป็นไปได้ใน 3 ด้าน: ทางเทคนิค (ทำได้จริงไหม?) ทางเศรษฐกิจ (คุ้มค่าไหม?) และการนำไปใช้จริง</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 md:col-span-2">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">5. ภาพประกอบ/สื่อนำเสนอ</h3>
+                        <p class="text-gray-700">ใช้ Storyboards, Sketches, Diagrams หรือ Mock-ups เพื่อช่วยนำเสนอแนวคิดให้เห็นภาพชัดเจน อาจสรุปเป็นสไลด์หรือโปสเตอร์</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="recommendations">
+                 <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">💡 ข้อแนะนำเพิ่มเติม</h2>
+                 <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-6 rounded-r-lg shadow-md">
+                    <ul class="space-y-3">
+                        <li><span class="font-bold">เน้น "Why" ก่อน "What":</span> ทำความเข้าใจปัญหาและความต้องการที่แท้จริงก่อนคิดวิธีแก้</li>
+                        <li><span class="font-bold">เปิดใจรับ Feedback:</span> การรับฟังความคิดเห็นจะช่วยให้คุณพัฒนาแนวคิดได้ดียิ่งขึ้น</li>
+                        <li><span class="font-bold">คิดนอกกรอบ:</span> อย่ากลัวที่จะเสนอแนวคิดที่ดูแปลกใหม่หรือแตกต่าง</li>
+                        <li><span class="font-bold">จัดทำเอกสารประกอบ:</span> รวบรวมหลักฐานในแต่ละขั้นตอน (เช่น บันทึกสัมภาษณ์, ภาพถ่าย) เพื่อความน่าเชื่อถือ</li>
+                    </ul>
+                 </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 pt-6 border-t">
+            <p class="text-gray-500">พัฒนาขึ้นเพื่อเป็นแนวทางในการสร้างสรรค์นวัตกรรมสำหรับ 7-Eleven</p>
+        </footer>
+    </div>
+
+    <script>
+        const stepsData = [
+            {
+                name: "Empathize",
+                thaiName: "ทำความเข้าใจ",
+                icon: "👥",
+                title: "ขั้นตอนที่ 1: Empathize (ทำความเข้าใจ)",
+                description: "ขั้นตอนนี้คือการทำความเข้าใจอย่างลึกซึ้งถึง **ผู้คน** ที่เกี่ยวข้องกับปัญหาหรือโอกาสที่คุณสนใจ ไม่ว่าจะเป็นลูกค้า พนักงานร้าน 7-Eleven หรือผู้มีส่วนได้ส่วนเสียอื่นๆ",
+                points: [
+                    {
+                        title: "การสำรวจปัญหา/โอกาส:",
+                        details: ["สังเกตปัญหาที่เกิดขึ้นจริงระหว่างฝึกงาน (เช่น การรอคิว, การจัดการสต็อก)", "มองหาโอกาสในการปรับปรุงหรือสร้างสรรค์สิ่งใหม่ๆ (เช่น เพิ่มยอดขาย, ลดต้นทุน)"]
+                    },
+                    {
+                        title: "การรวบรวมข้อมูล:",
+                        details: ["**การสังเกตการณ์:** บันทึกพฤติกรรมของลูกค้าและพนักงานในสถานการณ์จริง", "**การสัมภาษณ์:** พูดคุยเพื่อทำความเข้าใจความต้องการ, ปัญหา, และแรงจูงใจที่แท้จริง", "**การเก็บข้อมูลอื่นๆ:** ภาพถ่าย, วิดีโอ, หรือบันทึกเหตุการณ์สำคัญ"]
+                    }
+                ]
+            },
+            {
+                name: "Define",
+                thaiName: "กำหนดปัญหา",
+                icon: "🎯",
+                title: "ขั้นตอนที่ 2: Define (กำหนดปัญหา)",
+                description: "หลังจากรวบรวมข้อมูลแล้ว ขั้นตอนนี้คือการสังเคราะห์ข้อมูลเหล่านั้น เพื่อกำหนด **Pain Points (ปัญหา)** หรือ **Needs (ความต้องการ)** ที่แท้จริงของผู้ใช้งานอย่างชัดเจน",
+                points: [
+                    {
+                        title: "การวิเคราะห์ข้อมูล:",
+                        details: ["จัดกลุ่มข้อมูลที่ได้มาเพื่อมองหาแบบแผน (Pattern)", "ค้นหา Insight หรือความต้องการที่ซ่อนอยู่เบื้องหลังพฤติกรรม"]
+                    },
+                    {
+                        title: "การเขียน Problem Statement:",
+                        details: ["กำหนดปัญหาในรูปแบบ **'How Might We...'** (เราจะทำอย่างไรให้...)", "ตัวอย่าง: 'เราจะทำอย่างไรให้ลูกค้าที่เร่งรีบสามารถซื้อสินค้าได้รวดเร็วขึ้นในช่วงเวลาเร่งด่วน?'"]
+                    }
+                ]
+            },
+            {
+                name: "Ideate",
+                thaiName: "ระดมความคิด",
+                icon: "💡",
+                title: "ขั้นตอนที่ 3: Ideate (ระดมความคิด)",
+                description: "ขั้นตอนนี้คือการสร้างสรรค์แนวคิดในการแก้ปัญหาจาก Problem Statement ที่กำหนดไว้ โดยเน้นปริมาณมากกว่าคุณภาพในตอนแรก และไม่ตัดสินแนวคิดใดๆ",
+                points: [
+                    {
+                        title: "เทคนิคการระดมสมอง:",
+                        details: ["**Brainstorming:** เขียนทุกแนวคิดที่ผุดขึ้นมา", "**Mind Mapping:** สร้างแผนผังความคิดเพื่อเชื่อมโยงแนวคิด", "**Worst Possible Idea:** ลองคิดถึงแนวคิดที่แย่ที่สุดเพื่อกระตุ้นความคิดสร้างสรรค์"]
+                    },
+                    {
+                        title: "การคัดเลือกแนวคิด:",
+                        details: ["เลือกแนวคิดที่มีศักยภาพสูงสุด 1-3 แนวคิดเพื่อนำไปพัฒนาต่อ โดยพิจารณาจากความเป็นไปได้, ความแปลกใหม่, และศักยภาพในการแก้ปัญหา"]
+                    }
+                ]
+            },
+            {
+                name: "Prototype",
+                thaiName: "สร้างต้นแบบ",
+                icon: "🛠️",
+                title: "ขั้นตอนที่ 4: Prototype (สร้างต้นแบบแนวคิด)",
+                description: "ขั้นตอนนี้คือการแปลงแนวคิดที่เลือกมาให้เป็นรูปธรรมในรูปแบบที่สามารถนำไปสื่อสารและรับฟังความคิดเห็นได้ โดยไม่จำเป็นต้องสร้างของจริงทั้งหมด",
+                points: [
+                    {
+                        title: "การสร้างต้นแบบ (Concept Prototype):",
+                        details: [
+                            "**Storyboards:** วาดภาพลำดับเหตุการณ์การใช้งานนวัตกรรม",
+                            "**Sketches/Diagrams:** วาดภาพหรือแผนผังการทำงาน",
+                            "**Mock-ups:** สร้างแบบจำลองง่ายๆ จากกระดาษหรือดินน้ำมัน",
+                            "**Role-playing:** สาธิตการใช้งานผ่านการแสดงบทบาทสมมติ",
+                            "**Concept Document:** เขียนอธิบายแนวคิดอย่างละเอียด"
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "Test",
+                thaiName: "ทดสอบ",
+                icon: "🧪",
+                title: "ขั้นตอนที่ 5: Test (ทดสอบและปรับปรุงแนวคิด)",
+                description: "ขั้นตอนนี้คือการนำต้นแบบแนวคิดไปนำเสนอและรับฟังความคิดเห็นจากผู้ที่เกี่ยวข้อง เพื่อนำมาปรับปรุงและพัฒนาให้ดีขึ้น",
+                points: [
+                    {
+                        title: "การนำเสนอและรับฟังความคิดเห็น:",
+                        details: ["นำเสนอ Concept Prototype ให้กลุ่มเป้าหมาย (เช่น เพื่อน, พนักงาน)", "ตั้งคำถามปลายเปิดเพื่อรับฟังความคิดเห็น เช่น 'คุณรู้สึกอย่างไร?', 'มีอะไรที่ควรปรับปรุง?'"]
+                    },
+                    {
+                        title: "การเรียนรู้และปรับปรุง:",
+                        details: ["รวบรวม Feedback และนำมาวิเคราะห์", "ระบุจุดที่ต้องปรับปรุง หรืออาจย้อนกลับไปขั้นตอนก่อนหน้าหากแนวคิดยังไม่ตอบโจทย์", "นำ Feedback มาใช้ปรับปรุง Concept Prototype ให้ดียิ่งขึ้น"]
+                    }
+                ]
+            }
+        ];
+
+        const stepsContainer = document.getElementById('steps-container');
+        const stepContentContainer = document.getElementById('step-content');
+        let currentStep = 0;
+
+        function updateContent(stepIndex) {
+            currentStep = stepIndex;
+            const stepData = stepsData[stepIndex];
+            
+            let pointsHtml = stepData.points.map(point => {
+                let detailsHtml = point.details.map(detail => `<li class="text-gray-700">${detail}</li>`).join('');
+                return `
+                    <div class="mt-4">
+                        <h4 class="font-bold text-lg text-gray-800">${point.title}</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-1">${detailsHtml}</ul>
+                    </div>
+                `;
+            }).join('');
+
+            stepContentContainer.innerHTML = `
+                <h3 class="text-2xl font-bold text-[#007542]">${stepData.title}</h3>
+                <p class="mt-2 text-gray-600">${stepData.description}</p>
+                ${pointsHtml}
+            `;
+
+            document.querySelectorAll('.step-card').forEach((card, index) => {
+                if (index === stepIndex) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        stepsData.forEach((step, index) => {
+            const card = document.createElement('div');
+            card.className = 'step-card cursor-pointer bg-white p-4 rounded-lg shadow-md border-2 border-gray-200 text-center flex flex-col items-center justify-center';
+            card.innerHTML = `
+                <div class="text-3xl mb-2">${step.icon}</div>
+                <div class="font-bold text-sm sm:text-base">${step.name}</div>
+                <div class="text-xs text-gray-500">${step.thaiName}</div>
+            `;
+            card.addEventListener('click', () => updateContent(index));
+            stepsContainer.appendChild(card);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateContent(0);
+
+            const ctx = document.getElementById('scoringChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['กระบวนการ Design Thinking', 'ผลงานนวัตกรรม (Concept)'],
+                    datasets: [{
+                        label: 'สัดส่วนคะแนน',
+                        data: [50, 50],
+                        backgroundColor: [
+                            'rgba(0, 117, 66, 0.8)',
+                            'rgba(252, 194, 48, 0.9)'
+                        ],
+                        borderColor: [
+                            '#ffffff',
+                            '#ffffff'
+                        ],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
