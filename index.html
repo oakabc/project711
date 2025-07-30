@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=sarabun:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The application is structured as a single-page interactive guide. The core is a horizontal, clickable 5-step stepper representing the Design Thinking process. This allows users to navigate non-linearly. Clicking a step dynamically updates a central content area below, showing detailed information for that step. This focused-view approach prevents information overload. The structure begins with the project's objective, followed by a visual chart for the scoring criteria, the main interactive process guide, and concludes with the final deliverable requirements and recommendations. This flow was chosen to transform the static document into an engaging, step-by-step learning journey that is intuitive and mirrors the project's own logical progression. -->
-    <!-- Visualization & Content Choices: 1. Scoring Criteria: Presented as a Chart.js Donut chart to visually and quickly communicate the 50/50 weighting between Process and Concept, which is more engaging than text. Interaction includes tooltips on hover. 2. Design Thinking Process: A custom-built interactive stepper using styled HTML divs and Tailwind CSS. Unicode characters are used for icons. This serves as the main navigation, allowing users to select a stage. This is more interactive and visually appealing than a simple list. 3. Step Details & Deliverables: Content is organized into styled cards using HTML and Tailwind. This content is dynamically updated via JavaScript based on user interaction with the stepper, ensuring the interface remains clean and focused. This method was chosen for its clarity and ability to handle structured text effectively. -->
+    <!-- Application Structure Plan: The application is structured as a single-page interactive guide. The core is a horizontal, clickable 5-step stepper representing the Design Thinking process. This allows users to navigate non-linearly. Clicking a step dynamically updates a central content area below, showing detailed information for that step. This focused-view approach prevents information overload. The structure begins with the project's objective, followed by a visual chart for the scoring criteria, the main interactive process guide, and concludes with the final deliverable requirements, submission methods, group registration, presentation schedule, and recommendations. This flow was chosen to transform the static document into an engaging, step-by-step learning journey that is intuitive and mirrors the project's own logical progression. -->
+    <!-- Visualization & Content Choices: 1. Scoring Criteria: Presented as a Chart.js Donut chart to visually and quickly communicate the 50/40/10 weighting between Process, Concept, and Presentation, which is more engaging than text. Interaction includes tooltips on hover. 2. Design Thinking Process: A custom-built interactive stepper using styled HTML divs and Tailwind CSS. Unicode characters are used for icons. This serves as the main navigation, allowing users to select a stage. This is more interactive and visually appealing than a simple list. 3. Step Details & Deliverables: Content is organized into styled cards using HTML and Tailwind. This content is dynamically updated via JavaScript based on user interaction with the stepper, ensuring the interface remains clean and focused. This method was chosen for its clarity and ability to handle structured text effectively. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -46,8 +46,8 @@
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
 
         <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-[#007542]">โครงงานนวัตกรรม 7-Eleven</h1>
-            <p class="text-lg sm:text-xl mt-2 text-gray-600">แนวทางพัฒนานวัตกรรมด้วยกระบวนการ Design Thinking</p>
+            <h1 class="text-3xl sm:text-4xl font-bold text-[#007542]">1301107 : Engineering and Technology Project</h1>
+            <p class="text-lg sm:text-xl mt-2 text-gray-600">โครงงานนวัตกรรม 7-Eleven</p>
         </header>
 
         <main>
@@ -64,7 +64,7 @@
                     <div class="chart-container">
                         <canvas id="scoringChart"></canvas>
                     </div>
-                    <p class="text-center mt-4 text-gray-600">โครงงานจะถูกประเมินจาก 2 ส่วนหลักในสัดส่วนที่เท่ากัน เพื่อให้ความสำคัญทั้งกระบวนการและการผลลัพธ์ของแนวคิด</p>
+                    <p class="text-center mt-4 text-gray-600">โครงงานจะถูกประเมินจาก 3 ส่วนหลัก ได้แก่ กระบวนการ Design Thinking (50%), ผลงานนวัตกรรม (Concept) (40%) และการนำเสนอ (10%)</p>
                 </div>
             </section>
 
@@ -100,6 +100,39 @@
                         <h3 class="font-bold text-lg mb-2 text-[#007542]">5. ภาพประกอบ/สื่อนำเสนอ</h3>
                         <p class="text-gray-700">ใช้ Storyboards, Sketches, Diagrams หรือ Mock-ups เพื่อช่วยนำเสนอแนวคิดให้เห็นภาพชัดเจน อาจสรุปเป็นสไลด์หรือโปสเตอร์</p>
                     </div>
+                </div>
+            </section>
+
+            <section id="submission-methods" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">📦 วิธีการส่งโครงงาน</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">1. เอกสารโครงงาน (Google Doc)</h3>
+                        <p class="text-gray-700">จัดทำเอกสารสรุปโครงงานทั้งหมดตามแนวทางที่กำหนด โดยครอบคลุมทุกขั้นตอนของ Design Thinking และรายละเอียดของแนวคิดนวัตกรรม</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg mb-2 text-[#007542]">2. การนำเสนอ (Presentation)</h3>
+                        <p class="text-gray-700">เตรียมการนำเสนอแนวคิดนวัตกรรมและกระบวนการ Design Thinking ที่ใช้ โดยเน้นความชัดเจน น่าสนใจ และสามารถสื่อสารประเด็นสำคัญได้ครบถ้วน</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="group-registration" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">📝 การลงทะเบียนกลุ่ม</h2>
+                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-6 rounded-r-lg shadow-md">
+                    <p class="text-gray-700 mb-3">โปรดลงชื่อกลุ่มของคุณในเอกสาร Google Sheet ด้านล่าง เพื่อยืนยันการเข้าร่วมโครงงาน:</p>
+                    <a href="https://docs.google.com/spreadsheets/d/1bgOY5yVtmaqbc7d_70IiQWX7KDJckMoX/edit?gid=160736740#gid=160736740" target="_blank" class="inline-block bg-[#007542] hover:bg-[#005a34] text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                        คลิกเพื่อลงทะเบียนกลุ่ม
+                    </a>
+                </div>
+            </section>
+
+            <section id="presentation-schedule" class="mb-12">
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">📅 กำหนดการนำเสนอ</h2>
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-6 rounded-r-lg shadow-md">
+                    <p class="text-gray-700">
+                        ขณะนี้ยังไม่ได้กำหนดวันและเวลาสำหรับการนำเสนอ โปรดติดตามประกาศเพิ่มเติมเร็วๆ นี้
+                    </p>
                 </div>
             </section>
 
@@ -265,15 +298,17 @@
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['กระบวนการ Design Thinking', 'ผลงานนวัตกรรม (Concept)'],
+                    labels: ['กระบวนการ Design Thinking', 'ผลงานนวัตกรรม (Concept)', 'การนำเสนอ'],
                     datasets: [{
                         label: 'สัดส่วนคะแนน',
-                        data: [50, 50],
+                        data: [50, 40, 10], /* Updated data: 50% Process, 40% Concept, 10% Presentation */
                         backgroundColor: [
                             'rgba(0, 117, 66, 0.8)',
-                            'rgba(252, 194, 48, 0.9)'
+                            'rgba(252, 194, 48, 0.9)',
+                            'rgba(100, 149, 237, 0.8)' /* New color for Presentation */
                         ],
                         borderColor: [
+                            '#ffffff',
                             '#ffffff',
                             '#ffffff'
                         ],
